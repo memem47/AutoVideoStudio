@@ -29,3 +29,21 @@ UTF-8 JSON配列。各要素は `image`（プロジェクトからの相対パ�
 
 ## Roadmap
 字幕、立ち絵合成、口パク、まばたき、演出設定。
+
+
+## 自動字幕（v0.2.0）
+
+通常の `run.bat` 実行で字幕付き動画を生成します。WAVの再生時間を計測し、シーンごとの原稿を句読点・文字数で分割して字幕を表示します。字幕はMP4に焼き込まれ、YouTubeなどに読み込める `output.srt`（UTF-8）も生成されます。
+
+```cmd
+py -3.11 generate_audio.py sample
+py -3.11 make_video.py sample
+```
+
+字幕なしで出力するには:
+
+```cmd
+py -3.11 make_video.py sample --no-subtitles
+```
+
+FFmpegの`ass`フィルター（libass対応ビルド）が必要です。日本語字幕にはWindowsのMeiryoフォントを想定しています。字幕タイミングは音声全体の長さと文字数から推定するため、音素・単語単位の厳密な同期ではありません。SRTを直接編集しても焼き込み動画には反映されず、動画はscenes.jsonから再生成されます。
