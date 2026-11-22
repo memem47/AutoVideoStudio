@@ -43,7 +43,7 @@ def make_video(pairs, output, scenes=None, subtitles=True):
             if subtitles and scenes is not None:
                 ass = folder / f'subtitle_{i:05}.ass'
                 write_ass(scenes[i-1]['text'], duration, ass)
-                filters += f',ass={ass.name}'
+                filters += f',drawbox=x=0:y=540:w=iw:h=180:color=black@0.94:t=fill,ass={ass.name}'
             run('-loop', '1', '-framerate', FPS, '-i', image, '-i', audio,
                 '-vf', filters,
                 '-af', 'apad', '-t', f'{duration:.9f}', '-map', '0:v:0', '-map', '1:a:0',
